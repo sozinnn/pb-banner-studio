@@ -2135,7 +2135,7 @@ async function signSavePDF(){
   const tFW=SIGN.titleFontWeight,tAlign=SIGN.titleAlign,tPadTop=SIGN.titlePadTop,tPadSide=SIGN.titlePadSide;
   const iSize=SIGN.itemFontSize,iLS=SIGN.itemLetterSpacing.toFixed(1),iLH=SIGN.itemLineHeight;
   const iFW=SIGN.itemFontWeight,iAlign=SIGN.itemAlign;
-  const logoSize=SIGN.size==='a4p'?90:80,divW=2,pW=EW,pH=EH;
+  const logoSize=SIGN.size==='a4p'?90:80,logoPadB=SIGN.size==='a4p'?110:90,divW=2,pW=EW,pH=EH;
   let html='<div style="position:absolute;inset:0;overflow:hidden;box-sizing:border-box">';
   if(SIGN.size==='a4l'){
     const lIconSize=650,lIconCX=tPadSide+lIconSize/2,lIconCY=tPadTop+lIconSize/2;
@@ -2228,7 +2228,8 @@ async function signSaveAs(fmt){
   const iFW=SIGN.itemFontWeight;
   const iAlign=SIGN.itemAlign;
   const logoSize=SIGN.size==='a4p'?90:80;
-  const divW=Math.max(1,2);
+  const logoPadB=SIGN.size==='a4p'?110:90;
+  const divW=2;
   const pW=EW, pH=EH;
 
   let html='<div style="position:absolute;inset:0;overflow:hidden;box-sizing:border-box">';
