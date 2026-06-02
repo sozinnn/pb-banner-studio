@@ -398,10 +398,10 @@ textarea.tinput:focus{border-color:var(--accent);background:var(--surface3)}
     <div class="sec">
       <div class="sec-title">텍스트 색상</div>
       <div class="color-pick-row">
-        <div class="color-swatch-btn" id="textColorBtn" style="background:#1a1a1a">
-          <input type="color" id="textColorPicker" value="#1a1a1a">
+        <div class="color-swatch-btn" id="textColorBtn" style="background:#111111">
+          <input type="color" id="textColorPicker" value="#111111">
         </div>
-        <input type="text" class="hex-input" id="textHexInput" value="#1A1A1A" placeholder="#000000" maxlength="7">
+        <input type="text" class="hex-input" id="textHexInput" value="#111111" placeholder="#000000" maxlength="7">
       </div>
       <div class="swatch-grid" id="textSwatches"></div>
       <div class="line-colors" id="sqLineColors"></div>
@@ -837,7 +837,7 @@ const NBS_BG_ALL=[{name:'Orange (기본)',hex:'#FF6600'},{name:'Cream',hex:'#F5F
 
 // ── STATE ──
 const S={
-  bg:'#F5F0E8', textColor:'#1a1a1a',
+  bg:'#F5F0E8', textColor:'#111111',
   fontSize:60, fontWeight:700, textAlign:'center',
   letterSpacing:-1, lineHeight:1.15,
   padTop:50, padSide:40,
@@ -1380,7 +1380,7 @@ qs('#resetBtn').addEventListener('click',()=>{
   qs('#zoomVal').textContent='100%';
   qsa('#weightChips .chip').forEach(b=>{b.classList.remove('on');if(b.dataset.v==='700')b.classList.add('on');});
   qsa('#alignBtns .align-btn').forEach(b=>{b.classList.remove('on');if(b.dataset.v==='center')b.classList.add('on');});
-  applyTextColor('#1a1a1a'); applyBgColor('#F5F0E8');
+  applyTextColor('#111111'); applyBgColor('#F5F0E8');
   qsa('#textSwatches .swatch').forEach(s=>s.classList.remove('on'));
   qsa('.color-row').forEach(r=>{r.classList.remove('on');if(r.querySelector('.color-row-name')?.textContent==='Cream (기본)')r.classList.add('on');});
   const ep=qs('#bImgPan'); if(ep)ep.remove();
