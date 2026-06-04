@@ -1255,15 +1255,18 @@ async function squareSaveAs(fmt){
 
   qsa('.rh,.img-sel-border').forEach(el=>el.style.display='none');
 
-  // 화면 밖으로 이동해서 번쩍임 방지
+  // 저장 중 배너를 body로 이동해서 레이아웃 밀림 방지
+  const origParent=banner.parentNode;
+  const origNextSibling=banner.nextSibling;
+  const origT=banner.style.transform;
   const origPos=banner.style.position;
   const origLeft=banner.style.left;
   const origTop=banner.style.top;
-  banner.style.position='fixed';
-  banner.style.left='-'+(EXPORT+200)+'px';
-  banner.style.top='0';
 
-  const origT=banner.style.transform;
+  document.body.appendChild(banner);
+  banner.style.position='fixed';
+  banner.style.left='-'+(EXPORT+500)+'px';
+  banner.style.top='0';
   banner.style.transform='none';
   banner.style.width=EXPORT+'px'; banner.style.height=EXPORT+'px';
 
@@ -1310,6 +1313,8 @@ async function squareSaveAs(fmt){
 
   banner.style.transform=origT; banner.style.width='520px'; banner.style.height='520px';
   banner.style.position=origPos; banner.style.left=origLeft; banner.style.top=origTop;
+  if(origNextSibling) origParent.insertBefore(banner, origNextSibling);
+  else origParent.appendChild(banner);
   t.style.fontSize=oFS; t.style.letterSpacing=oLS; wrap.style.padding=oPad;
   if(zone){zone.style.top=oZT;zone.style.height=oZH;}
   const pan2=qs('#bImgPan');
