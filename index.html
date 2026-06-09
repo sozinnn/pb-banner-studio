@@ -1400,52 +1400,53 @@ async function nbsSaveAs(fmt){
 
 // ── RESET ──
 qs('#resetBtn').addEventListener('click',()=>{
-  Object.assign(S,{bg:'#FFF9ED',textColor:'#1a1a1a',fontSize:60,fontWeight:700,textAlign:'center',letterSpacing:-1,lineHeight:1.15,padTop:50,padSide:40,imgSrc:null,imgW:520,imgX:0,imgY:0,zoom:1});
-  qs('#inputText').value='타이틀은 여기에\n입력해주세요.';
-  [['sl_fs',60],['nb_fs',60],['sl_ls',-1],['nb_ls',-1],['sl_lh',115],['nb_lh','1.15'],['sl_pt',50],['nb_pt',50],['sl_ps',40],['nb_ps',40]].forEach(([id,v])=>{const el=qs('#'+id);if(el)el.value=v;});
-  qs('#zoomVal').textContent='100%';
-  qsa('#weightChips .chip').forEach(b=>{b.classList.remove('on');if(b.dataset.v==='700')b.classList.add('on');});
-  qsa('#alignBtns .align-btn').forEach(b=>{b.classList.remove('on');if(b.dataset.v==='center')b.classList.add('on');});
-  applyTextColor('#111111'); applyBgColor('#FFF9ED');
-  qsa('#textSwatches .swatch').forEach(s=>s.classList.remove('on'));
-  qsa('.color-row').forEach(r=>{r.classList.remove('on');if(r.querySelector('.color-row-name')?.textContent==='Cream (기본)')r.classList.add('on');});
-  const ep=qs('#bImgPan'); if(ep)ep.remove();
-  qs('#bImgPh').style.display='flex';
-  qs('#imgHint').style.display='none';
-  qs('#uploadArea').innerHTML=`<div class="upload-box"><input type="file" id="imgInput" accept="image/*"><span class="upload-icon">🖼</span><p><strong>클릭하여 이미지 선택</strong><br>JPG · PNG · WEBP</p></div>`;
-  qs('#imgInput').addEventListener('change',e=>handleImageFile(e.target.files[0]));
+  if(currentTab==='square'){
+    Object.assign(S,{bg:'#FFF9ED',textColor:'#1a1a1a',fontSize:60,fontWeight:700,textAlign:'center',letterSpacing:-1,lineHeight:1.15,padTop:50,padSide:40,imgSrc:null,imgW:520,imgX:0,imgY:0,zoom:1});
+    qs('#inputText').value='타이틀은 여기에\n입력해주세요.';
+    [['sl_fs',60],['nb_fs',60],['sl_ls',-1],['nb_ls',-1],['sl_lh',115],['nb_lh','1.15'],['sl_pt',50],['nb_pt',50],['sl_ps',40],['nb_ps',40]].forEach(([id,v])=>{const el=qs('#'+id);if(el)el.value=v;});
+    qs('#zoomVal').textContent='100%';
+    qsa('#weightChips .chip').forEach(b=>{b.classList.remove('on');if(b.dataset.v==='700')b.classList.add('on');});
+    qsa('#alignBtns .align-btn').forEach(b=>{b.classList.remove('on');if(b.dataset.v==='center')b.classList.add('on');});
+    applyTextColor('#111111'); applyBgColor('#FFF9ED');
+    qsa('#textSwatches .swatch').forEach(s=>s.classList.remove('on'));
+    qsa('.color-row').forEach(r=>{r.classList.remove('on');if(r.querySelector('.color-row-name')?.textContent==='Cream (기본)')r.classList.add('on');});
+    const ep=qs('#bImgPan'); if(ep)ep.remove();
+    qs('#bImgPh').style.display='flex';
+    qs('#imgHint').style.display='none';
+    qs('#uploadArea').innerHTML=`<div class="upload-box"><input type="file" id="imgInput" accept="image/*"><span class="upload-icon">🖼</span><p><strong>클릭하여 이미지 선택</strong><br>JPG · PNG · WEBP</p></div>`;
+    qs('#imgInput').addEventListener('change',e=>handleImageFile(e.target.files[0]));
+    S.lineColors={};
+    buildSqLineColors();
+    render();
 
-  S.lineColors={};
-  buildSqLineColors();
-  render();
+  } else if(currentTab==='nbs'){
+    const nbsDefaults={bg:'#FF6600',textColor:'#FFFFFF',fontSize:160,fontWeight:700,textAlign:'center',vertAlign:'middle',letterSpacing:-1,lineHeight:1.25,padTop:0,padSide:0,zoom:1,text:'오피스\n지점찾기',lineColors:{}};
+    if(NS.mode==='mo'){
+      qs('#nbsMO').classList.add('on'); qs('#nbsPC').classList.remove('on');
+      qs('#nbsSizeTag').textContent='1000 × 670 px';
+      Object.assign(NBS_STATE_MO, nbsDefaults, {mode:'mo'});
+      restoreNbsState(NBS_STATE_MO);
+    } else {
+      qs('#nbsPC').classList.add('on'); qs('#nbsMO').classList.remove('on');
+      qs('#nbsSizeTag').textContent='1000 × 655 px';
+      Object.assign(NBS_STATE_PC, nbsDefaults, {mode:'pc'});
+      restoreNbsState(NBS_STATE_PC);
+    }
+    qsa('#nbsBgColorList .color-row').forEach(r=>{r.classList.remove('on');if(r.querySelector('.color-row-name')?.textContent==='Orange (기본)')r.classList.add('on');});
 
-  // ── 사인물 초기화 (현재 탭 기준) ──
-  if(SIGN.size==='a4l'){
-    qs('#signA4L').classList.add('on'); qs('#signA4P').classList.remove('on');
-    qs('#signSizeTag').textContent='A4 가로';
-    applySignDefaults(SIGN_DEFAULTS_L);
-    SIGN_STATE_L=saveSignState();
-  } else {
-    qs('#signA4P').classList.add('on'); qs('#signA4L').classList.remove('on');
-    qs('#signSizeTag').textContent='A4 세로';
-    applySignDefaults(SIGN_DEFAULTS_P);
-    SIGN_STATE_P=saveSignState();
+  } else if(currentTab==='sign'){
+    if(SIGN.size==='a4l'){
+      qs('#signA4L').classList.add('on'); qs('#signA4P').classList.remove('on');
+      qs('#signSizeTag').textContent='A4 가로';
+      applySignDefaults(SIGN_DEFAULTS_L);
+      SIGN_STATE_L=saveSignState();
+    } else {
+      qs('#signA4P').classList.add('on'); qs('#signA4L').classList.remove('on');
+      qs('#signSizeTag').textContent='A4 세로';
+      applySignDefaults(SIGN_DEFAULTS_P);
+      SIGN_STATE_P=saveSignState();
+    }
   }
-
-  // ── NBS 초기화 (현재 탭 기준) ──
-  const nbsDefaults={bg:'#FF6600',textColor:'#FFFFFF',fontSize:160,fontWeight:700,textAlign:'center',vertAlign:'middle',letterSpacing:-1,lineHeight:1.25,padTop:0,padSide:0,zoom:1,text:'오피스\n지점찾기',lineColors:{}};
-  if(NS.mode==='mo'){
-    qs('#nbsMO').classList.add('on'); qs('#nbsPC').classList.remove('on');
-    qs('#nbsSizeTag').textContent='1000 × 670 px';
-    Object.assign(NBS_STATE_MO, nbsDefaults, {mode:'mo'});
-    restoreNbsState(NBS_STATE_MO);
-  } else {
-    qs('#nbsPC').classList.add('on'); qs('#nbsMO').classList.remove('on');
-    qs('#nbsSizeTag').textContent='1000 × 655 px';
-    Object.assign(NBS_STATE_PC, nbsDefaults, {mode:'pc'});
-    restoreNbsState(NBS_STATE_PC);
-  }
-  qsa('#nbsBgColorList .color-row').forEach(r=>{r.classList.remove('on');if(r.querySelector('.color-row-name')?.textContent==='Orange (기본)')r.classList.add('on');});
 
   toast('↺ 초기화 완료');
 });
