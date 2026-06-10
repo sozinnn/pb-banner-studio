@@ -781,7 +781,7 @@ textarea.tinput:focus{border-color:var(--accent);background:var(--surface3)}
       <div class="meta-tag">Pretendard</div>
     </div>
     <div class="banner-outer" id="signBannerOuter">
-      <div id="signBanner" style="position:relative;overflow:hidden;font-family:'Pretendard',-apple-system,sans-serif;background:#000000">
+      <div id="signBanner" style="position:relative;overflow:hidden;font-family:'Pretendard',-apple-system,sans-serif;background:#111111">
         <div id="signContent"></div>
       </div>
     </div>
@@ -797,10 +797,10 @@ textarea.tinput:focus{border-color:var(--accent);background:var(--surface3)}
     <div class="sec">
       <div class="sec-title">배경 색상</div>
       <div class="color-pick-row">
-        <div class="color-swatch-btn" id="signBgBtn" style="background:#000000">
-          <input type="color" id="signBgPicker" value="#000000">
+        <div class="color-swatch-btn" id="signBgBtn" style="background:#111111">
+          <input type="color" id="signBgPicker" value="#111111">
         </div>
-        <input type="text" class="hex-input" id="signBgHex" value="#000000" maxlength="7">
+        <input type="text" class="hex-input" id="signBgHex" value="#111111" maxlength="7">
       </div>
     </div>
     <div class="color-scroll" id="signBgColorList"></div>
@@ -830,7 +830,7 @@ const PALETTE=[
   {name:'Purple',hex:'#B500FF'},{name:'Blue',hex:'#3939FF'},
   {name:'Green',hex:'#1EAF4C'},{name:'Dark Green',hex:'#114141'},
   {name:'Brown Sugar',hex:'#AA6E4A'},{name:'Gray',hex:'#B4B4B4'},
-  {name:'Black',hex:'#000000'},{name:'White',hex:'#FFFFFF'},
+  {name:'Black',hex:'#111111'},{name:'White',hex:'#FFFFFF'},
 ];
 const BG_ALL=[{name:'Cream (기본)',hex:'#FFF9ED'},...PALETTE];
 const NBS_BG_ALL=[{name:'Orange (기본)',hex:'#FF6600'},{name:'Cream',hex:'#FFF9ED'},...PALETTE.filter(c=>c.hex!=='#FF6600')];
@@ -1766,7 +1766,7 @@ const SIGN_CONFIGS={
   a4l:{w:3508,h:2480,label:'A4 가로',previewW:440,previewH:Math.round(440*2480/3508)},
 };
 const SIGN_DEFAULTS_P={
-  bg:'#000000', textColor:'#FFFFFF', accentColor:'#FF0000', zoom:1,
+  bg:'#111111', textColor:'#FFFFFF', accentColor:'#FF0000', zoom:1,
   titleFontSize:300, titleLetterSpacing:-1, titleLineHeight:1.25,
   titleFontWeight:700, titleAlign:'left', titlePadTop:300, titlePadSide:200,
   itemFontSize:90, itemLetterSpacing:-1, itemLineHeight:1.80,
@@ -1775,7 +1775,7 @@ const SIGN_DEFAULTS_P={
   items:['타이틀 Bold / 본문 Regular','본문 길어질 경우 폰트크기 줄이기'],
 };
 const SIGN_DEFAULTS_L={
-  bg:'#000000', textColor:'#FFFFFF', accentColor:'#FF0000', zoom:1,
+  bg:'#111111', textColor:'#FFFFFF', accentColor:'#FF0000', zoom:1,
   titleFontSize:300, titleLetterSpacing:-1, titleLineHeight:1.25,
   titleFontWeight:700, titleAlign:'left', titlePadTop:300, titlePadSide:200,
   itemFontSize:90, itemLetterSpacing:-1, itemLineHeight:1.80,
@@ -2081,7 +2081,7 @@ setupSignColor('signTextBtn','signTextPicker','signTextHex',function(v){SIGN.tex
 setupSignColor('signAccentBtn','signAccentPicker','signAccentHex',function(v){SIGN.accentColor=v;});
 
 // ── Sign BG color list (right panel) ──
-const SIGN_BG_ALL=[{name:'Black (기본)',hex:'#000000'},...PALETTE.filter(function(c){return c.hex!=='#000000';})];
+const SIGN_BG_ALL=[{name:'Black (기본)',hex:'#111111'},...PALETTE.filter(function(c){return c.hex!=='#111111';})];
 const signBgListEl=qs('#signBgColorList');
 if(signBgListEl){
   SIGN_BG_ALL.forEach(function(c){
