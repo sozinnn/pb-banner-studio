@@ -406,7 +406,7 @@ textarea.tinput:focus{border-color:var(--accent);background:var(--surface3)}
         <div class="color-swatch-btn" id="textColorBtn" style="background:#111111">
           <input type="color" id="textColorPicker" value="#111111">
         </div>
-        <input type="text" class="hex-input" id="textHexInput" value="#111111" placeholder="#000000" maxlength="7">
+        <input type="text" class="hex-input" id="textHexInput" value="#111111" placeholder="#111111" maxlength="7">
       </div>
       <div class="swatch-grid" id="textSwatches"></div>
       <div class="line-colors" id="sqLineColors"></div>
@@ -623,7 +623,7 @@ textarea.tinput:focus{border-color:var(--accent);background:var(--surface3)}
     <div class="sec">
       <div class="sec-title">제목</div>
       <div class="field">
-        <textarea class="tinput" id="signTitle" style="height:64px" placeholder="제목을 입력하세요">제목은
+        <textarea class="tinput" id="signTitle" style="height:80px" placeholder="제목을 입력하세요">제목은
 두 줄 이내</textarea>
       </div>
       <div class="field">
@@ -689,14 +689,14 @@ textarea.tinput:focus{border-color:var(--accent);background:var(--surface3)}
             <span>항목 1</span>
             <button class="sign-del-btn" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:0 4px;">✕</button>
           </div>
-          <textarea class="tinput" style="height:56px" placeholder="항목 내용">타이틀 Bold / 본문 Regular</textarea>
+          <textarea class="tinput" style="height:150px" placeholder="항목 내용">타이틀 Bold / 본문 Regular</textarea>
         </div>
         <div class="field sign-item-field" data-idx="1">
           <div class="field-label" style="display:flex;align-items:center;justify-content:space-between">
             <span>항목 2</span>
             <button class="sign-del-btn" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:0 4px;">✕</button>
           </div>
-          <textarea class="tinput" style="height:56px" placeholder="항목 내용">본문 길어질 경우 폰트크기 줄이기</textarea>
+          <textarea class="tinput" style="height:150px" placeholder="항목 내용">본문 길어질 경우 폰트크기 줄이기</textarea>
         </div>
       </div>
       <button id="signAddItem" style="width:100%;margin-top:8px;padding:8px;background:var(--surface2);border:1px dashed var(--border-light);border-radius:var(--radius);color:var(--text-muted);font-family:var(--font);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s">+ 항목 추가</button>
@@ -1949,8 +1949,8 @@ function applySignDefaults(defaults){
   qs('#signTextBtn').style.background=defaults.textColor; qs('#signTextPicker').value=defaults.textColor; qs('#signTextHex').value=defaults.textColor;
   qs('#signAccentBtn').style.background=defaults.accentColor; qs('#signAccentPicker').value=defaults.accentColor; qs('#signAccentHex').value=defaults.accentColor;
   qs('#signItemsContainer').innerHTML=
-    '<div class="field sign-item-field" data-idx="0"><div class="field-label" style="display:flex;align-items:center;justify-content:space-between"><span>항목 1</span><button class="sign-del-btn" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:0 4px;">✕</button></div><textarea class="tinput" style="height:56px" placeholder="항목 내용">타이틀 Bold / 본문 Regular</textarea></div>'+
-    '<div class="field sign-item-field" data-idx="1"><div class="field-label" style="display:flex;align-items:center;justify-content:space-between"><span>항목 2</span><button class="sign-del-btn" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:0 4px;">✕</button></div><textarea class="tinput" style="height:56px" placeholder="항목 내용">본문 길어질 경우 폰트크기 줄이기</textarea></div>';
+    '<div class="field sign-item-field" data-idx="0"><div class="field-label" style="display:flex;align-items:center;justify-content:space-between"><span>항목 1</span><button class="sign-del-btn" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:0 4px;">✕</button></div><textarea class="tinput" style="height:150px" placeholder="항목 내용">타이틀 Bold / 본문 Regular</textarea></div>'+
+    '<div class="field sign-item-field" data-idx="1"><div class="field-label" style="display:flex;align-items:center;justify-content:space-between"><span>항목 2</span><button class="sign-del-btn" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:0 4px;">✕</button></div><textarea class="tinput" style="height:150px" placeholder="항목 내용">본문 길어질 경우 폰트크기 줄이기</textarea></div>';
   signRender();
 }
 
@@ -2000,7 +2000,7 @@ function restoreSignState(snap){
     snap.items.forEach(function(txt,i){
       var d=document.createElement('div');
       d.className='field sign-item-field'; d.dataset.idx=i;
-      d.innerHTML='<div class="field-label" style="display:flex;align-items:center;justify-content:space-between"><span>항목 '+(i+1)+'</span><button class="sign-del-btn" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:0 4px;">✕</button></div><textarea class="tinput" style="height:56px" placeholder="항목 내용">'+txt+'</textarea>';
+      d.innerHTML='<div class="field-label" style="display:flex;align-items:center;justify-content:space-between"><span>항목 '+(i+1)+'</span><button class="sign-del-btn" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:0 4px;">✕</button></div><textarea class="tinput" style="height:150px" placeholder="항목 내용">'+txt+'</textarea>';
       c.appendChild(d);
     });
   }
@@ -2057,7 +2057,7 @@ qs('#signAddItem').addEventListener('click',function(){
   const idx=container.querySelectorAll('.sign-item-field').length;
   const div=document.createElement('div');
   div.className='field sign-item-field'; div.dataset.idx=idx;
-  div.innerHTML='<div class="field-label" style="display:flex;align-items:center;justify-content:space-between"><span>항목 '+(idx+1)+'</span><button class="sign-del-btn" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:0 4px">✕</button></div><textarea class="tinput" style="height:64px" placeholder="항목 내용"></textarea>';
+  div.innerHTML='<div class="field-label" style="display:flex;align-items:center;justify-content:space-between"><span>항목 '+(idx+1)+'</span><button class="sign-del-btn" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:0 4px">✕</button></div><textarea class="tinput" style="height:150px" placeholder="항목 내용"></textarea>';
   container.appendChild(div);
   div.querySelector('textarea').addEventListener('input',signRender);
   signRender();
