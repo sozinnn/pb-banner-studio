@@ -485,8 +485,8 @@ textarea.tinput:focus{border-color:var(--accent);background:var(--surface3)}
     <div class="sec">
       <div class="sec-title">버전</div>
       <div class="nbs-tabs">
-        <button class="nbs-tab on" id="nbsPC">PC (1000×655)</button>
-        <button class="nbs-tab" id="nbsMO">모바일 (1000×670)</button>
+        <button class="nbs-tab on" id="nbsPC">PC (232×166)</button>
+        <button class="nbs-tab" id="nbsMO">모바일 (240×240)</button>
       </div>
     </div>
 
@@ -503,8 +503,8 @@ textarea.tinput:focus{border-color:var(--accent);background:var(--surface3)}
       <div class="field">
         <div class="field-label">폰트 크기</div>
         <div class="sn-row">
-          <div class="sl-wrap"><input type="range" id="nbs_sl_fs" min="18" max="300" value="160"></div>
-          <input type="number" class="num-box" id="nbs_nb_fs" min="18" max="300" value="160">
+          <div class="sl-wrap"><input type="range" id="nbs_sl_fs" min="8" max="80" value="32"></div>
+          <input type="number" class="num-box" id="nbs_nb_fs" min="8" max="80" value="32">
         </div>
       </div>
       <div class="field">
@@ -517,8 +517,8 @@ textarea.tinput:focus{border-color:var(--accent);background:var(--surface3)}
       <div class="field">
         <div class="field-label">줄간격</div>
         <div class="sn-row">
-          <div class="sl-wrap"><input type="range" id="nbs_sl_lh" min="80" max="200" value="125" step="5"></div>
-          <input type="number" class="num-box" id="nbs_nb_lh" min="0.8" max="2.0" value="1.25" step="0.05">
+          <div class="sl-wrap"><input type="range" id="nbs_sl_lh" min="80" max="200" value="120" step="5"></div>
+          <input type="number" class="num-box" id="nbs_nb_lh" min="0.8" max="2.0" value="1.20" step="0.05">
         </div>
       </div>
       <div class="field">
@@ -573,7 +573,7 @@ textarea.tinput:focus{border-color:var(--accent);background:var(--surface3)}
   <!-- CANVAS -->
   <div class="canvas-area" id="nbsCanvasArea">
     <div class="canvas-meta">
-      <div class="meta-tag" id="nbsSizeTag">1000 × 655 px</div>
+      <div class="meta-tag" id="nbsSizeTag">232 × 166 px</div>
       <div class="meta-tag">네이버 브랜드 검색</div>
       <div class="meta-tag">Pretendard</div>
     </div>
@@ -1367,18 +1367,18 @@ async function nbsSaveAs(fmt){
     txt.innerHTML=nbsLines.map(function(l){return parseMdBold(l,NS.fontWeight,NS.textColor);}).join('<br>');
   }
 
+  const expPad=Math.round(EW*0.08); // 8% of export width
   if(NS.vertAlign==='middle'){
     wrap.style.top='0'; wrap.style.bottom='0'; wrap.style.height=EH+'px';
     wrap.style.display='flex'; wrap.style.flexDirection='column'; wrap.style.justifyContent='center';
-    wrap.style.padding='80px 80px';
+    wrap.style.padding=`${expPad}px ${expPad}px`;
   } else if(NS.vertAlign==='bottom'){
     wrap.style.bottom='0'; wrap.style.top='auto';
-    wrap.style.padding='0 80px 80px';
+    wrap.style.padding=`0 ${expPad}px ${expPad}px`;
   } else {
     wrap.style.top='0';
-    wrap.style.padding='80px 80px 0';
+    wrap.style.padding=`${expPad}px ${expPad}px 0`;
   }
-
   wrap.appendChild(txt);
   offscreen.appendChild(wrap);
   document.body.appendChild(offscreen);
@@ -1421,16 +1421,17 @@ qs('#resetBtn').addEventListener('click',()=>{
     render();
 
   } else if(currentTab==='nbs'){
-    const nbsDefaults={bg:'#FF6600',textColor:'#FFFFFF',fontSize:160,fontWeight:700,textAlign:'center',vertAlign:'middle',letterSpacing:-1,lineHeight:1.25,padTop:0,padSide:0,zoom:1,text:'오피스\n지점찾기',lineColors:{}};
+    const nbsDefaultsPC={bg:'#FF6600',textColor:'#FFFFFF',fontSize:32,fontWeight:700,textAlign:'center',vertAlign:'middle',letterSpacing:-1,lineHeight:1.2,padTop:0,padSide:0,zoom:1,text:'오피스\n지점찾기',lineColors:{}};
+    const nbsDefaultsMO={bg:'#FF6600',textColor:'#FFFFFF',fontSize:36,fontWeight:700,textAlign:'center',vertAlign:'middle',letterSpacing:-1,lineHeight:1.3,padTop:0,padSide:0,zoom:1,text:'오피스\n지점찾기',lineColors:{}};
     if(NS.mode==='mo'){
       qs('#nbsMO').classList.add('on'); qs('#nbsPC').classList.remove('on');
-      qs('#nbsSizeTag').textContent='1000 × 670 px';
-      Object.assign(NBS_STATE_MO, nbsDefaults, {mode:'mo'});
+      qs('#nbsSizeTag').textContent='240 × 240 px';
+      Object.assign(NBS_STATE_MO, nbsDefaultsMO, {mode:'mo'});
       restoreNbsState(NBS_STATE_MO);
     } else {
       qs('#nbsPC').classList.add('on'); qs('#nbsMO').classList.remove('on');
-      qs('#nbsSizeTag').textContent='1000 × 655 px';
-      Object.assign(NBS_STATE_PC, nbsDefaults, {mode:'pc'});
+      qs('#nbsSizeTag').textContent='232 × 166 px';
+      Object.assign(NBS_STATE_PC, nbsDefaultsPC, {mode:'pc'});
       restoreNbsState(NBS_STATE_PC);
     }
     qsa('#nbsBgColorList .color-row').forEach(r=>{r.classList.remove('on');if(r.querySelector('.color-row-name')?.textContent==='Orange (기본)')r.classList.add('on');});
@@ -1453,18 +1454,18 @@ qs('#resetBtn').addEventListener('click',()=>{
 });
 
 // ══ NBS STATE ══
-// PC: 1000×655 preview at ~480×314  ratio=0.48
-// MO: 1000×670 preview at ~480×322  ratio=0.48
+// PC: 232×166 preview at 480×343  ratio≈2.07
+// MO: 240×240 preview at 480×480  ratio=2.0
 const NBS_CONFIGS={
-  pc:{w:1000,h:655,label:'1000×655',previewW:480,previewH:Math.round(480*655/1000)},
-  mo:{w:1000,h:670,label:'1000×670',previewW:480,previewH:Math.round(480*670/1000)},
+  pc:{w:232,h:166,label:'232×166',previewW:480,previewH:Math.round(480*166/232)},
+  mo:{w:240,h:240,label:'240×240',previewW:480,previewH:480},
 };
 const NS={
   mode:'pc',
   bg:'#FF6600', textColor:'#FFFFFF',
   lineColors:{}, // {lineIndex: hex}
-  fontSize:160, fontWeight:700, textAlign:'center', vertAlign:'middle',
-  letterSpacing:-1, lineHeight:1.25,
+  fontSize:32, fontWeight:700, textAlign:'center', vertAlign:'middle',
+  letterSpacing:-1, lineHeight:1.2,
   padTop:0, padSide:0,
   zoom:1,
 };
@@ -1503,29 +1504,30 @@ function nbsRender(){
   const wrap=qs('#nbsTextWrap');
   // 스타일 초기화
   wrap.style.top=''; wrap.style.bottom=''; wrap.style.display=''; wrap.style.flexDirection=''; wrap.style.justifyContent='';
+  const padPx=Math.round(pW*0.08); // 8% of preview width
   if(NS.vertAlign==='middle'){
     wrap.style.position='absolute';
     wrap.style.top='0'; wrap.style.bottom='0'; wrap.style.left='0'; wrap.style.right='0';
     wrap.style.display='flex'; wrap.style.flexDirection='column'; wrap.style.justifyContent='center';
-    wrap.style.padding=`${Math.round(80*ratio)}px ${Math.round(80*ratio)}px`;
+    wrap.style.padding=`${padPx}px ${padPx}px`;
   } else if(NS.vertAlign==='bottom'){
     wrap.style.position='absolute';
     wrap.style.top='auto'; wrap.style.bottom='0'; wrap.style.left='0'; wrap.style.right='0';
     wrap.style.display='block';
-    wrap.style.padding=`0 ${Math.round(80*ratio)}px ${Math.round(80*ratio)}px`;
+    wrap.style.padding=`0 ${padPx}px ${padPx}px`;
   } else {
     // top
     wrap.style.position='absolute';
     wrap.style.bottom='auto'; wrap.style.top='0'; wrap.style.left='0'; wrap.style.right='0';
     wrap.style.display='block';
-    wrap.style.padding=`${Math.round(80*ratio)}px ${Math.round(80*ratio)}px 0`;
+    wrap.style.padding=`${padPx}px ${padPx}px 0`;
   }
 }
 
 // NBS SUB-TABS
 // ── NBS per-tab state storage ──
-var NBS_STATE_PC = {mode:'pc',bg:'#FF6600',textColor:'#FFFFFF',fontSize:160,fontWeight:700,textAlign:'center',vertAlign:'middle',letterSpacing:-1,lineHeight:1.25,padTop:0,padSide:0,zoom:1,text:'오피스\n지점찾기',lineColors:{}};
-var NBS_STATE_MO = {mode:'mo',bg:'#FF6600',textColor:'#FFFFFF',fontSize:160,fontWeight:700,textAlign:'center',vertAlign:'middle',letterSpacing:-1,lineHeight:1.25,padTop:0,padSide:0,zoom:1,text:'오피스\n지점찾기',lineColors:{}};
+var NBS_STATE_PC = {mode:'pc',bg:'#FF6600',textColor:'#FFFFFF',fontSize:32,fontWeight:700,textAlign:'center',vertAlign:'middle',letterSpacing:-1,lineHeight:1.2,padTop:0,padSide:0,zoom:1,text:'오피스\n지점찾기',lineColors:{}};
+var NBS_STATE_MO = {mode:'mo',bg:'#FF6600',textColor:'#FFFFFF',fontSize:36,fontWeight:700,textAlign:'center',vertAlign:'middle',letterSpacing:-1,lineHeight:1.3,padTop:0,padSide:0,zoom:1,text:'오피스\n지점찾기',lineColors:{}};
 
 function saveNbsState(){
   var snap=Object.assign({},NS);
@@ -1555,14 +1557,14 @@ qs('#nbsPC').addEventListener('click',()=>{
   if(NS.mode==='mo') NBS_STATE_MO=saveNbsState();
   NS.mode='pc';
   qs('#nbsPC').classList.add('on'); qs('#nbsMO').classList.remove('on');
-  qs('#nbsSizeTag').textContent='1000 × 655 px';
+  qs('#nbsSizeTag').textContent='232 × 166 px';
   restoreNbsState(NBS_STATE_PC);
 });
 qs('#nbsMO').addEventListener('click',()=>{
   if(NS.mode==='pc') NBS_STATE_PC=saveNbsState();
   NS.mode='mo';
   qs('#nbsMO').classList.add('on'); qs('#nbsPC').classList.remove('on');
-  qs('#nbsSizeTag').textContent='1000 × 670 px';
+  qs('#nbsSizeTag').textContent='240 × 240 px';
   restoreNbsState(NBS_STATE_MO);
 });
 
